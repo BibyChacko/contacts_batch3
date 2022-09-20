@@ -1,5 +1,7 @@
 
 
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:contacts_service/contacts_service.dart';
@@ -27,7 +29,17 @@ class _ContactPageState extends State<ContactPage> {
       appBar: AppBar(
         title: Text("Contacts"),
       ),
-      body: Container(),
+      body: ListView.builder(
+        itemCount: contacts.length,
+        itemBuilder: (context,index){
+          Contact contactItem = contacts[index];
+          String mobNos = (contactItem.phones ?? []).map((e) => e.value??"").toList().join(" ");
+          return ListTile(
+            title: Text("${contactItem.displayName}"),
+            subtitle: Text(mobNos),
+          );
+        },
+      ),
     );
   }
 
